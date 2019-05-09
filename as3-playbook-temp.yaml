@@ -1,0 +1,26 @@
+ -name: AS3 Declaration
+  host: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+  uri_method: POST
+
+  vars_files:
+    - ../creds/big_creds.yaml
+
+  tasks:
+    - name: Issue AS3 Declaration
+      uri:
+        url: https://3.215.59.192/mgmt/shared/appsvcs/declare
+        method: "{{ uri_method }}"
+        user: "{{ bigip_user }}"
+        password: "{{ bigip_pass }}"
+        body: "{{ lookup('file','./as3-declarations/simpleas3.json') }}"
+        force_basic_auth: yes
+        status_code: 200
+        validate_certs: no
+        body_format: json
+
+
+
